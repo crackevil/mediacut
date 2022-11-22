@@ -40,7 +40,7 @@ class cut_command(object):
 
 	@property
 	def args(self):
-		return ['ffmpeg', '-i', self.infile, '-c', 'copy']
+		return ['ffmpeg', '-hide_banner', '-i', self.infile, '-c', 'copy']
 
 	def run_cut(self, t_ss, t_to):
 		t_args = []
