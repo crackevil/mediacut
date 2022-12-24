@@ -45,8 +45,10 @@ class cut_command(object):
 	def run_cut(self, t_ss, t_to):
 		t_args = []
 		if t_ss:
+			t_ss = from_string(t_ss)
 			t_args += ['-ss', str(t_ss)]
 		if t_to:
+			t_to = from_string(t_to)
 			t_args += ['-to', str(t_to)]
 		args = self.args + t_args + [self.outfile]
 		six.print_(' '.join(args))

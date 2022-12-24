@@ -8,7 +8,7 @@ class hhmmss(object):
 	def __init__(self, ss, mm=0, hh=0):
 		'seonds could be float'
 		assert 0<=ss
-		assert isinstance(mm, int) and 0<=mm<60
+		assert isinstance(mm, int) and 0<=mm
 		assert isinstance(hh, int) and 0<=hh
 		self._seconds = hh*3600 + mm*60 + ss
 
