@@ -43,6 +43,7 @@ class cut_command(object):
 		return ['ffmpeg', '-hide_banner', '-i', self.infile, '-c', 'copy']
 
 	def run_cut(self, t_ss, t_to):
+		# copied timestamps from some app may not having hours
 		t_args = []
 		if t_ss:
 			t_ss = from_string(t_ss)
@@ -101,15 +102,11 @@ class mediacut_shell(Cmd):
 
 
 def find_adjcent_keyframe(keys, t):
-	n = len(keys)
-	if n < 2:
-		return keys
-	else:
-		for i in range(n-1):
-			p = keys[i]
-			q = keys[i+1]
-			if p <= t and q >= t:
-				return (p, q)
+	p = list(filter(lambda x:x<=t, keys))
+	p = max(p) if len(p) > 0 else None
+	q = list(filter(lambda x:x>=t, keys))
+	q = min(q) if len(q) > 0 else None
+	return (p, q)
 
 usage = '''
 to seek keyframes, command line requires 'infile' parameter only
