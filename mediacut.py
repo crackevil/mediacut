@@ -28,7 +28,13 @@ class keyframe_command(object):
 		ret = subprocess.check_output(args).decode('ascii')
 		ret = ret.splitlines(False)
 		ret = [r.partition(',')[0] for r in ret if len(r) > 0]
-		return list(map(float, ret))
+		# in case of some extra output from ffmpeg
+		def fl(x):
+			try:
+				return float(x)
+			except ValueError:
+				pass
+		return [x for x in list(map(fl, ret)) if x]
 
 
 class cut_command(object):
@@ -93,7 +99,7 @@ class mediacut_shell(Cmd):
 					raise ValueError('input error')
 				assert t_ss or t_to
 				cut_command(self.infile, self.outfile).run_cut(t_ss, t_to)
-		except:
+		except Exception:
 			traceback.print_exc()
 		six.print_()
 
